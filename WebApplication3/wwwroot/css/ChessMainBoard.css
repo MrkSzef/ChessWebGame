@@ -1,0 +1,97 @@
+﻿body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+input:invalid{
+    border: red solid 3px;
+}
+input:valid{
+    border: green solid 3px;
+}
+
+.board-container {
+    margin-top: 20px;
+}
+
+.chessboard {
+    display: grid;
+    grid-template-columns: repeat(8, 60px);
+    grid-template-rows: repeat(8, 60px);
+    border: 3px solid #333;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    user-select: none;
+}
+
+.square {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    cursor: pointer;
+    position: relative;
+}
+
+.white {
+    background-color: #f0d9b5;
+}
+
+.black {
+    background-color: #b58863;
+}
+
+.square.selected {
+    box-shadow: inset 0 0 0 4px #5bce5b;
+}
+
+.square.valid-move {
+    box-shadow: inset 0 0 0 4px rgba(91, 206, 91, 0.7);
+}
+
+.coordinates {
+    position: absolute;
+    font-size: 12px;
+    color: #666;
+}
+
+.file {
+    bottom: 2px;
+    right: 4px;
+}
+
+.rank {
+    top: 2px;
+    left: 4px;
+}
+
+.move-info {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    width: 480px;
+    min-height: 50px;
+    font-family: monospace;
+    font-size: 16px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 0;
+}
+
+p {
+    color: #666;
+    margin-top: 5px;
+}
+#gamestatus-container{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
