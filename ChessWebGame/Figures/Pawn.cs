@@ -1,4 +1,4 @@
-﻿namespace ChessConsoleGame.Figures;
+﻿namespace ChessWebGame.Figures;
 
 public class Pawn : Figure
 {
@@ -8,16 +8,28 @@ public class Pawn : Figure
     
     public override bool ValidateMove(int[] From, int[] To, List<List<Figure>> _GameState)
     {
-        if (_GameState[To[0]+1][To[1]].GetType() != typeof(Empty))
+        int direction = FigureColor == (int)Color.White ? -1 : 1;
+        if (To[1] == From[1] && To[0] == From[0] + direction 
+                             && _GameState[To[0]][To[1]].GetType() == typeof(Empty))
         {
-            return false;
+            hasMoved = true;
+            return true;
         }
-        if (From[1] != To[1])
+
+
+        if (Math.Abs(To[1] - From[1]) == 1 && To[0] == From[0] + direction 
+                                           && _GameState[To[0]][To[1]].GetType() != typeof(Empty)
+                                           && _GameState[To[0]][To[1]].FigureColor != FigureColor)
         {
-            return false;
+            hasMoved = true;
+            return true;
         }
-        else if (_NumberOfFigureMoves == 0 && To[0]-From[0] <= 2)
+
+        if (!hasMoved && To[1] == From[1] && To[0] == From[0] + (2 * direction)
+            && _GameState[From[0] + direction][From[1]].GetType() == typeof(Empty)
+            && _GameState[To[0]][To[1]].GetType() == typeof(Empty))
         {
+            hasMoved = true;
             return true;
         }
 
