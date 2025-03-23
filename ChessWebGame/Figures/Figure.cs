@@ -1,4 +1,4 @@
-﻿namespace ChessConsoleGame.Figures;
+﻿namespace ChessWebGame.Figures;
 
 public class Figure
 {
@@ -7,7 +7,7 @@ public class Figure
     protected string _symbol = "E";
     private int _figureColor;
     public int[] position { set; get; }
-    internal int _NumberOfFigureMoves = 0;
+    internal bool hasMoved = false;
     
     #endregion
 
@@ -41,11 +41,11 @@ public class Figure
     {
         if (From[0] < 8 & From[1] < 8)
         {
-            _NumberOfFigureMoves++;
+            hasMoved = true;
             return true;
         }
 
-        _NumberOfFigureMoves++;
+        hasMoved = false;
         return false;
     }
 

@@ -4,7 +4,6 @@ let PlayerColor;
 let GameCode;
 
 
-
 var connection = new signalR.HubConnectionBuilder()
                         .withUrl("/chessGame").build();
 

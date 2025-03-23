@@ -1,15 +1,15 @@
 ﻿using System.Runtime.Intrinsics.X86;
-using ChessConsoleGame.Figures;
+using ChessWebGame.Figures;
 using System.Text.Json;
 
-namespace ChessConsoleGame;
+namespace ChessWebGame;
 
 public partial class Engine
 {
     public string _GameKey { init; get; }
     public string _WhiteUser { init; get; }
     public string _BlackUser { set; get; }
-
+    private int _NextMoveColor = 0;
 
     public void GetAllPositionsAndNames()
     {
@@ -51,6 +51,17 @@ public partial class Engine
     
     public bool MoveTo(int[] From, int[] To)
     {
+        // Next Move Checker
+
+        if (!(_NextMoveColor == _GameField[From[0]][From[1]].FigureColor))
+        {
+            Console.WriteLine($"Not Your Turn {_GameField[From[0]][From[1]].FigureColor}");
+            return false;
+        }
+        
+        
+        
+        // Basic Logic Checking
         if (From[0].Equals(To[0]) & From[1].Equals(To[1]))
         {
             Console.WriteLine("Move aint moving");
@@ -76,10 +87,19 @@ public partial class Engine
             Console.WriteLine("Invalid Move 4");
             return false;
         }
+
+        if (_GameField[From[0]][From[1]].FigureColor == _GameField[To[0]][To[1]].FigureColor)
+        {
+            Console.WriteLine("Cannot Capture Figure with the same color ERR5");
+            return false;
+        }
         Console.WriteLine(_GameField[From[0]][From[1]].Symbol);
         _GameField[To[0]][To[1]] = _GameField[From[0]][From[1]];
         _GameField[To[0]][To[1]].position = To;
         _GameField[From[0]][From[1]] = new Empty();
+        
+        // Next Move Setting
+        _NextMoveColor = _NextMoveColor == 0 ? 1 : 0;
         
         Console.WriteLine("moze sie udalo");
         return true;

@@ -1,4 +1,4 @@
-﻿namespace ChessConsoleGame.Figures;
+﻿namespace ChessWebGame.Figures;
 
 public class Rook : Figure
 {

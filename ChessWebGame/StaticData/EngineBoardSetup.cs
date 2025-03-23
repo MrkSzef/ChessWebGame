@@ -1,6 +1,6 @@
-﻿using ChessConsoleGame.Figures;
+﻿using ChessWebGame.Figures;
 
-namespace ChessConsoleGame;
+namespace ChessWebGame;
 
 public partial class Engine
 {

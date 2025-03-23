@@ -1,8 +1,6 @@
-﻿using ChessConsoleGame;
-using ChessConsoleGame.Figures;
+﻿using ChessWebGame;
 using Microsoft.AspNetCore.SignalR;
 namespace ChessWebGame.Hubs;
-using Microsoft.AspNetCore.Authorization;
 
 
 public class ChessGame : Hub
