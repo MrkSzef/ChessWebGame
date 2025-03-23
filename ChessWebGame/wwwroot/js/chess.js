@@ -176,11 +176,11 @@ function movePiece(from, to) {
 
 // Display move information in the required format
 function displayMoveInfo(from, to, capturedPiece) {
-    const moveText = `[{${from.file},${from.rank}},{${to.file},${to.rank}}]`;
+    const moveText = `[{${from[1]},${from[0]}},{${to[1]},${to[0]}}]`;
 
     // Add additional information about the move
-    const fromSquare = `${files[from.file]}${ranks[from.rank]}`;
-    const toSquare = `${files[to.file]}${ranks[to.rank]}`;
+    const fromSquare = `${files[from[1]]}${ranks[from[0]]}`;
+    const toSquare = `${files[to[1]]}${ranks[to[0]]}`;
     const piece = selectedPiece;
 
     let moveDescription = `${moveText}<br><br>`;
@@ -189,7 +189,7 @@ function displayMoveInfo(from, to, capturedPiece) {
     if (capturedPiece) {
         moveDescription += `<br>Captured ${getPieceName(capturedPiece)}`;
     }
-
+    
     moveInfo.innerHTML = moveDescription;
 }
 

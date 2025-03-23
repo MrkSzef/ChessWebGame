@@ -6,18 +6,17 @@
     padding: 20px;
     background-color: #f0f0f0;
 }
-input:invalid{
-    border: red solid 3px;
-}
-input:valid{
-    border: green solid 3px;
-}
 
 .board-container {
+    display: flex;
+    flex-direction: column;
     margin-top: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
 .chessboard {
+    width: min-content;
     display: grid;
     grid-template-columns: repeat(8, 60px);
     grid-template-rows: repeat(8, 60px);
