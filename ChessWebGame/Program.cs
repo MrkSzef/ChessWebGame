@@ -27,7 +27,7 @@ app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-app.MapHub<ChatHub>("/chatHub");
+
 app.MapHub<ChessGame>("/chessGame");
 
 app.Run();
