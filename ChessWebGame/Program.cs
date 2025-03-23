@@ -3,6 +3,7 @@ using ChessWebGame.Hubs;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.WebHost.UseStaticWebAssets();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 
