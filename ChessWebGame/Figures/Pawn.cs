@@ -12,7 +12,6 @@ public class Pawn : Figure
         if (To[1] == From[1] && To[0] == From[0] + direction 
                              && _GameState[To[0]][To[1]].GetType() == typeof(Empty))
         {
-            hasMoved = true;
             return true;
         }
 
@@ -21,15 +20,13 @@ public class Pawn : Figure
                                            && _GameState[To[0]][To[1]].GetType() != typeof(Empty)
                                            && _GameState[To[0]][To[1]].FigureColor != FigureColor)
         {
-            hasMoved = true;
             return true;
         }
 
-        if (!hasMoved && To[1] == From[1] && To[0] == From[0] + (2 * direction)
+        if (!_hasMoved && To[1] == From[1] && To[0] == From[0] + (2 * direction)
             && _GameState[From[0] + direction][From[1]].GetType() == typeof(Empty)
             && _GameState[To[0]][To[1]].GetType() == typeof(Empty))
         {
-            hasMoved = true;
             return true;
         }
 
