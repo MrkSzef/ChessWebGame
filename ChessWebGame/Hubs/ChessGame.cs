@@ -13,7 +13,7 @@ public class ChessGame : Hub
     {
         Console.WriteLine(Context.User.Identity.Name);
         string key = Guid.NewGuid().ToString();
-        var engine = new Engine { _GameKey = key };
+        var engine = new Engine { GameKey = key };
         _sessions.Add(key,engine);
         
         foreach (KeyValuePair<string, Engine> entry in _sessions)
