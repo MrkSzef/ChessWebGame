@@ -2,7 +2,7 @@
 
 public class Queen : Figure
 {
-    public Queen() : base("Q"){}
+    public Queen() : base(FigureSymbol.Queen){}
 
     public override bool ValidateMove(int[] From, int[] To, List<List<Figure>> _GameState)
     {

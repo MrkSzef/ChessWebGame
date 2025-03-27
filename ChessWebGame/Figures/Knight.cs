@@ -2,7 +2,7 @@
 
 public class Knight : Figure
 {
-    public Knight() : base("N"){}
+    public Knight() : base(FigureSymbol.Knight){}
 
     public override bool ValidateMove(int[] From, int[] To, List<List<Figure>> _GameState)
     {

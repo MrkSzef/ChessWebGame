@@ -4,8 +4,8 @@ public class Figure
 {
     #region Params
 
-    protected string _symbol = "E";
-    private int _figureColor;
+    private readonly FigureSymbol _symbol = FigureSymbol.Empty;
+    private FigureColor _figureColor;
     
     public int[] position { set; get; }
     internal bool _hasMoved = false;
@@ -18,20 +18,20 @@ public class Figure
     {
         set => _hasMoved = value;
     }
-    public string Symbol
+    public FigureSymbol Symbol
     {
         get => _symbol;
     }
-    public int FigureColor
+    public FigureColor FigureColor
     {
         get => _figureColor;
-        init => _figureColor = (int)value;
+        init => _figureColor = value;
     }
     
     #endregion
     
     #region Constructor
-    public Figure(string symbol)
+    public Figure(FigureSymbol symbol)
     {
         _symbol = symbol;
     }
@@ -140,17 +140,5 @@ public class Figure
             Console.WriteLine($"{row[0]} - {row[1]}");
         }
         return true; 
-    }
-
-    public enum Color
-    {
-        White,
-        Black
-    }
-    
-    public enum ColorShort
-    {
-        w,
-        b
     }
 }

@@ -1,4 +1,6 @@
-﻿using ChessWebGame;
+﻿using System.Text.Json;
+using ChessWebGame;
+using ChessWebGame.HelperClasses;
 using Microsoft.AspNetCore.SignalR;
 namespace ChessWebGame.Hubs;
 
@@ -11,28 +13,29 @@ public class ChessGame : Hub
     
     public async Task CreateSession()
     {
-        Console.WriteLine(Context.User.Identity.Name);
-        string key = Guid.NewGuid().ToString();
+        string key = Guid.NewGuid().ToString()[..8];
         var engine = new Engine { GameKey = key };
+        string boardLayout = JsonSerializer.Serialize(engine.GetBoardLayout());
+        
+        // Add Session To Pool
         _sessions.Add(key,engine);
         
-        foreach (KeyValuePair<string, Engine> entry in _sessions)
-        {
-            Console.WriteLine($"{entry.Key}: {entry.Value}");
-        }
+        
         await Groups.AddToGroupAsync(Context.ConnectionId, key);
-        await Clients.Client(Context.ConnectionId).SendAsync("Transfer", key,engine.GetBoardLayout(),"w");
+        await Clients.Client(Context.ConnectionId).SendAsync("Transfer", key,boardLayout,FigureColor.White.ToShortName());
     }
 
     public async Task JoinSession(string inviteKey)
     {
         await Groups.AddToGroupAsync(Context.ConnectionId, inviteKey);
+        string boardLayout = JsonSerializer.Serialize(_sessions[inviteKey].GetBoardLayout());
+
         foreach (KeyValuePair<string, Engine> entry in _sessions)
         {
             Console.WriteLine($"{entry.Key}: {entry.Value}");
         }
         await Clients.Client(Context.ConnectionId)
-            .SendAsync("Transfer", inviteKey, _sessions[inviteKey].GetBoardLayout(),"b");
+            .SendAsync("Transfer", inviteKey, boardLayout,FigureColor.Black.ToShortName());
     }
 
     public async Task MoveTo(string inviteKey,int[] From,int[] To)

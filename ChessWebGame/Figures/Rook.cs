@@ -2,7 +2,7 @@
 
 public class Rook : Figure
 {
-    public Rook() : base("R"){}
+    public Rook() : base(FigureSymbol.Rook){}
 
     public override bool ValidateMove(int[] From, int[] To, List<List<Figure>> _GameState)
     {

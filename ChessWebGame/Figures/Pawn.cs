@@ -2,13 +2,13 @@
 
 public class Pawn : Figure
 {
-    public Pawn() : base("P"){}
+    public Pawn() : base(FigureSymbol.Pawn){}
 
     
     
     public override bool ValidateMove(int[] From, int[] To, List<List<Figure>> _GameState)
     {
-        int direction = FigureColor == (int)Color.White ? -1 : 1;
+        int direction = FigureColor == (int)FigureColor.White ? -1 : 1;
         if (To[1] == From[1] && To[0] == From[0] + direction 
                              && _GameState[To[0]][To[1]].GetType() == typeof(Empty))
         {

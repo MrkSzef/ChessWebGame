@@ -1,6 +1,7 @@
 ﻿using System.Runtime.Intrinsics.X86;
 using ChessWebGame.Figures;
 using System.Text.Json;
+using ChessWebGame.HelperClasses;
 using ChessWebGame.ValidationLogic;
 
 namespace ChessWebGame;
@@ -8,62 +9,65 @@ namespace ChessWebGame;
 public partial class Engine
 {
     public required string GameKey { init; get; }
-    private int _NextMoveColor = 0;
+    private FigureColor _nextMoveColor = FigureColor.White;
     
     
-    public string GetBoardLayout()
+    public List<List<string>> GetBoardLayout()
     {
-        List<List<string>> TempMainList = new List<List<string>>();
-        List<string> TempInnerList;
+        List<List<string>> tempMainList = new List<List<string>>();
+        List<string> tempInnerList;
 
         foreach (var row in _GameField)
         {
-            TempInnerList = new List<string>();
+            tempInnerList = new List<string>();
             foreach (Figure fig in row)
             {
-                if (fig.Symbol == "E")
+                if (fig.Symbol == FigureSymbol.Empty)
                 {
-                    TempInnerList.Add(string.Empty);
+                    tempInnerList.Add(string.Empty);
                 }
                 else
                 {
-                    TempInnerList.Add($"{(Figure.ColorShort)fig.FigureColor}{fig.Symbol}");
+                    tempInnerList.Add($"{fig.FigureColor.ToShortName()}{fig.Symbol.ToShortName()}");
                 }
             }
-            TempMainList.Add(TempInnerList);
+            tempMainList.Add(tempInnerList);
         }
 
-        return JsonSerializer.Serialize(TempMainList);
+        return tempMainList;
+    }
+
+    private static void ProgressTurn(ref FigureColor nextMoveColorVar)
+    {
+        nextMoveColorVar = nextMoveColorVar == FigureColor.White ? FigureColor.Black : FigureColor.White;
     }
     
     public bool MoveTo(int[] From, int[] To)
     {
-        Figure SelectedFigure = _GameField[From[0]][From[1]];
+        Figure selectedFigure = _GameField[From[0]][From[1]];
         
         
-        SelectedFigure.CheckCollision(From,To,_GameField);
+        selectedFigure.CheckCollision(From,To,_GameField);
         
         
-        // Next Move Checker
-
-        if (_NextMoveColor != SelectedFigure.FigureColor)
+        // Check If Correct Player Moves
+        if (_nextMoveColor != selectedFigure.FigureColor)
         {
-            Console.WriteLine($"Not Your Turn {SelectedFigure.FigureColor}");
+            
             return false;
         }
 
         // Check if Move is Valid
         Validate.ValidateMove(From,To,_GameField);
-        
-        
-        Console.WriteLine(SelectedFigure.Symbol);
-        _GameField[To[0]][To[1]] = SelectedFigure;
+
+        // Move Figure To New Position
+        _GameField[To[0]][To[1]] = selectedFigure;
         _GameField[To[0]][To[1]].position = To;
         _GameField[From[0]][From[1]] = new Empty();
         
         // Next Move Setting
-        _NextMoveColor = _NextMoveColor == 0 ? 1 : 0;
-        SelectedFigure.HasMoved = true;
+        ProgressTurn(ref _nextMoveColor);
+        selectedFigure.HasMoved = true;
         
         Console.WriteLine("moze sie udalo");
         return true;

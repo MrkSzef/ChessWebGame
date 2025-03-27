@@ -2,7 +2,7 @@
 
 public class Bishop : Figure
 {
-    public Bishop() : base("B"){}
+    public Bishop() : base(FigureSymbol.Bishop){}
 
     public override bool ValidateMove(int[] From, int[] To, List<List<Figure>> _GameState)
     {

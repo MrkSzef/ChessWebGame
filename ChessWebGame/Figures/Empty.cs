@@ -2,9 +2,9 @@
 
 public class Empty : Figure
 {
-    public Empty() : base("E")
+    public Empty() : base(FigureSymbol.Empty)
     {
         position = new[] { 100, 100 };
-        FigureColor = 2;
+        FigureColor = FigureColor.None;
     }
 }
