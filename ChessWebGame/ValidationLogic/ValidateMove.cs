@@ -2,7 +2,7 @@
 
 namespace ChessWebGame.ValidationLogic;
 
-public class Validate
+public partial class Validate
 {
     static readonly int MaxBoardDimension = 7;
 
@@ -30,7 +30,7 @@ public class Validate
         if (!selectedFigure.ValidateMove(From,To,_GameState)) return false;
         
         // Check if there's a figure in the way
-        if (!selectedFigure.CheckCollision(From, To, _GameState) && selectedFigure is not Knight) return false;
+        if (!ValidateCollision(From, To, _GameState) && selectedFigure is not Knight) return false;
         
         return true;
     }

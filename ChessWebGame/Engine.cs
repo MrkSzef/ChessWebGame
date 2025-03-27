@@ -6,11 +6,11 @@ using ChessWebGame.ValidationLogic;
 
 namespace ChessWebGame;
 
-public partial class Engine
+public class Engine
 {
     public required string GameKey { init; get; }
     private FigureColor _nextMoveColor = FigureColor.White;
-    
+    private List<List<Figure>> _GameField = BoardInitializer.Initialize();
     
     public List<List<string>> GetBoardLayout()
     {
@@ -46,20 +46,19 @@ public partial class Engine
     {
         Figure selectedFigure = _GameField[From[0]][From[1]];
         
-        
-        selectedFigure.CheckCollision(From,To,_GameField);
-        
-        
         // Check If Correct Player Moves
         if (_nextMoveColor != selectedFigure.FigureColor)
         {
             
             return false;
         }
-
-        // Check if Move is Valid
-        Validate.ValidateMove(From,To,_GameField);
-
+        
+        // Validate For Basic Rules
+        if (!Validate.ValidateMove(From, To, _GameField)) return false;
+        
+        // Validate Selected Figure
+        if (!selectedFigure.ValidateMove(From,To,_GameField)) return false;
+        
         // Move Figure To New Position
         _GameField[To[0]][To[1]] = selectedFigure;
         _GameField[To[0]][To[1]].position = To;
@@ -69,7 +68,6 @@ public partial class Engine
         ProgressTurn(ref _nextMoveColor);
         selectedFigure.HasMoved = true;
         
-        Console.WriteLine("moze sie udalo");
         return true;
     }
 }
