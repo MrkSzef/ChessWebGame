@@ -94,3 +94,16 @@ p {
     flex-direction: row;
     gap: 20px;
 }
+.next-move-container{
+    text-align: center;
+    font-size: x-large;    
+}
+
+@keyframes dropDown {
+    0% {
+        transform: translateY(-500px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}

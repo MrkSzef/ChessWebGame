@@ -17,8 +17,11 @@ connection.on("Transfer", function (key, boardlayout, playercolor) {
     document.getElementById("createSessionButton").disabled = true;
     document.getElementById("joinSessionButton").disabled = true;
     document.getElementById("joinSessionInput").disabled = true;
-    
     createBoard();
+})
+
+connection.on("NextMoveColor", function (color) {
+    document.getElementById("next-move").textContent = `${color} Turn`;
 })
 
 connection.on("MoveTo", function (From, To) {
@@ -126,7 +129,7 @@ function handleSquareClick(event) {
     const file = parseInt(square.dataset.file);
     
     
-    if (board[rank][file][0] != PlayerColor && !selectedPiece){
+    if (board[rank][file][0] !== PlayerColor && !selectedPiece){
         console.log("Cannot Select Other Player Figures")
     }
     // If no piece is selected and the clicked square has a piece

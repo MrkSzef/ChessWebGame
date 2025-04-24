@@ -10,14 +10,34 @@ public class Engine
 {
     public required string GameKey { init; get; }
     private FigureColor _nextMoveColor = FigureColor.White;
-    private List<List<Figure>> _GameField = BoardInitializer.Initialize();
+
+    public FigureColor NextMoveColor
+    {
+        get => _nextMoveColor;
+    }
+
+    private readonly List<List<Figure>> _gameField = BoardInitializer.InitializeGameBoard();
+    
+    
+    
+    public Player WhitePlayer = new Player()
+    {
+        PlayerColor = FigureColor.White,
+        IsConnected = false
+    };
+
+    public Player BlackPlayer = new Player()
+    {
+        PlayerColor = FigureColor.Black,
+        IsConnected = false
+    };
     
     public List<List<string>> GetBoardLayout()
     {
         List<List<string>> tempMainList = new List<List<string>>();
         List<string> tempInnerList;
 
-        foreach (var row in _GameField)
+        foreach (var row in _gameField)
         {
             tempInnerList = new List<string>();
             foreach (Figure fig in row)
@@ -44,25 +64,29 @@ public class Engine
     
     public bool MoveTo(int[] From, int[] To)
     {
-        Figure selectedFigure = _GameField[From[0]][From[1]];
+        Figure selectedFigure = _gameField[From[0]][From[1]];
         
         // Check If Correct Player Moves
         if (_nextMoveColor != selectedFigure.FigureColor)
         {
-            
+            return false;
+        }
+
+        if (!IsGameStarted())
+        {
             return false;
         }
         
         // Validate For Basic Rules
-        if (!Validate.ValidateMove(From, To, _GameField)) return false;
+        if (!Validate.ValidateMove(From, To, _gameField)) return false;
         
         // Validate Selected Figure
-        if (!selectedFigure.ValidateMove(From,To,_GameField)) return false;
+        if (!selectedFigure.ValidateMove(From,To,_gameField)) return false;
         
         // Move Figure To New Position
-        _GameField[To[0]][To[1]] = selectedFigure;
-        _GameField[To[0]][To[1]].position = To;
-        _GameField[From[0]][From[1]] = new Empty();
+        _gameField[To[0]][To[1]] = selectedFigure;
+        _gameField[To[0]][To[1]].position = To;
+        _gameField[From[0]][From[1]] = new Empty();
         
         // Next Move Setting
         ProgressTurn(ref _nextMoveColor);
@@ -70,4 +94,10 @@ public class Engine
         
         return true;
     }
+
+    public bool IsGameStarted()
+    {
+        return this.WhitePlayer.IsConnected && this.BlackPlayer.IsConnected;
+    }
+    
 }

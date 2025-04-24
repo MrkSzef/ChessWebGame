@@ -4,7 +4,7 @@ namespace ChessWebGame;
 
 public class BoardInitializer
 {
-    public static List<List<Figure>> Initialize(){
+    public static List<List<Figure>> InitializeGameBoard(){
       return [
                 // Row 1 (Black Major Pieces)
                 [ new Rook(){position = [1,1], FigureColor = FigureColor.Black},
